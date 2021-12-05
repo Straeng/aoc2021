@@ -32,7 +32,7 @@ def part1(input_data):
             gamma += '1'
         else:
             gamma += '0'
-    
+
     epsilon = ''.join(['0' if c == '1' else '1' for c in gamma])
     gammav = int(gamma, 2)
     epsilonv = int(epsilon, 2)
@@ -51,15 +51,16 @@ def part2(input_data):
 
         if len(oxygen_data) > 1:
             oxygen_data = list(filter(lambda strval: strval[i] == vo, oxygen_data))
-        if len(co2_data) > 1:    
+        if len(co2_data) > 1:
             co2_data = list(filter(lambda strval: strval[i] != vc, co2_data))
 
     oxygen = int(oxygen_data[0], 2)
     co2 = int(co2_data[0], 2)
     return oxygen*co2
 
+
 with open('input', 'r') as f:
     input_data = [s.strip() for s in f.readlines()]
-    
+
     print(f'Part1: {part1(input_data)}')
     print(f'Part2: {part2(input_data)}')

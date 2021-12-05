@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-import re
 
 
 def parse_boards(lines):
     for i in range(0, len(lines), 6):
         yield [[int(n) for n in row.strip().split()] for row in lines[i:i+5]]
-
 
 
 class Board:
@@ -19,7 +17,7 @@ class Board:
             try:
                 j = row.index(n)
                 self._marks[i][j] = True
-            except:
+            except ValueError:
                 pass
 
     def check(self):
@@ -45,7 +43,6 @@ if __name__ == '__main__':
         draw_order = [int(n) for n in lines[0].split(',')]
         boards = [Board(b) for b in parse_boards(lines[2:])]
 
-
         winners = []
         for nbr in draw_order:
             for n, board in enumerate(boards):
@@ -56,6 +53,6 @@ if __name__ == '__main__':
 
                 if board.check():
                     winners.append(board.score()*nbr)
-    
+
     print(f'Part1: First win score = {winners[0]}')
     print(f'Part2: Last win score = {winners[-1]}')

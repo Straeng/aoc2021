@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-
 from functools import reduce
+
 
 def count_increments(value, elem):
     if not value:
         return (0, elem)
     inc = 1 if elem > value[1] else 0
     return (value[0] + inc, elem)
-
 
 
 with open('input', 'r') as f:
