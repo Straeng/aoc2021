@@ -50,8 +50,7 @@ def cave_map():
     return cave_map
 
 
-def path_explorer(node, cave_map, path, results, ,
-):
+def path_explorer(node, cave_map, path, results, allow_small_twice):
 
     if node.islower() and node in path:
         if node == allow_small_twice:
