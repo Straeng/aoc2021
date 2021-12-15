@@ -3,6 +3,7 @@ import math
 from collections import namedtuple
 from itertools import chain
 from dataclasses import dataclass
+from queue import PriorityQueue
 
 
 test = """
@@ -35,6 +36,7 @@ class Node:
     pos: tuple
     risk: int
     prev: object
+    visited: bool
 
 
 def x_iter(grid):
@@ -65,28 +67,31 @@ def neighbors(node, nodes):
     return n
 
 
-nodes = [[Node(total=math.inf, risk=risks[y][x], pos=Pos(x, y), prev=None) for x in x_iter(risks)] for y in y_iter(risks)]
+nodes = [[Node(total=math.inf, risk=risks[y][x], pos=Pos(x, y), prev=None, visited=False) for x in x_iter(risks)] for y in y_iter(risks)]
 
 
 n = nodes[ymax-1][xmax-1]
 print(f'{n.pos}, {n.risk} {n.total}')
 
-unvisited = list(chain(*nodes))
-#heapq.heapify(unvisited)
+Q = PriorityQueue(ymax*xmax)
+#unvisited = list(chain(*nodes))
 
 nodes[0][0].total = 0
 nodes[0][0].risk = 0
 
-while unvisited:
-    #cur = heapq.heappop(unvisited)
-    unvisited.sort()
-    cur = unvisited.pop(0)
+Q.put(nodes[0][0])
+
+nr_visited = 0
+while nr_visited < xmax*ymax:
+    cur = Q.get()
+    nr_visited += 1
     #print(f'{cur.pos}, R:{cur.risk} T:{cur.total}')
-    print(len(unvisited))
+    
     for n in neighbors(cur, nodes):
-        if n in unvisited and cur.total + n.risk < n.total:
+        if not n.visited and cur.total + n.risk < n.total:
             n.total = cur.total + n.risk
             n.prev = cur
+            Q.put(n)
 
 #print(nodes)
 n = nodes[ymax-1][xmax-1]
