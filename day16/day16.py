@@ -61,10 +61,13 @@ def perform_op(type_id, values):
     elif type_id == 3:
         return max(values)
     elif type_id == 5:
+        assert len(values) == 2
         return 1 if values[0] > values[1] else 0
     elif type_id == 6:
+        assert len(values) == 2
         return 1 if values[0] < values[1] else 0
     elif type_id == 7:
+        assert len(values) == 2
         return 1 if values[0] == values[1] else 0
 
 
